@@ -18,7 +18,7 @@
     <ClCompile Include="src\classInterpolate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\example_distance_calculation.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\units.cpp">

@@ -130,7 +130,7 @@
     <ClCompile Include="src\classCommand.cpp" />
     <ClCompile Include="src\classDatetime.cpp" />
     <ClCompile Include="src\classInterpolate.cpp" />
-    <ClCompile Include="src\example_distance_calculation.cpp" />
+    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\units.cpp" />
   </ItemGroup>
   <ItemGroup>
