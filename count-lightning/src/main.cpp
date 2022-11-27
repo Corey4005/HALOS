@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <netcdf> //YAY WE GOT THE NETCDF FILES FROM VCPKG!!
+
 int main() {
 
 	Command obj; 
