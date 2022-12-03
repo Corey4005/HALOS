@@ -25,11 +25,50 @@ void Datetime::setDate(int y, int mo, int d) {
 	day = setDay(d, mo);
 }
 
-//void Datetime::set_dYear() { // work here
-	//int sum = 0; 
-	//for (int i = 0; daysPtr < i; i++)
-		//std::cout << i; 
-//}
+
+void Datetime::set_dYear() {
+	int totalDays = 0; //we want the total number of days 
+	int count = 0;
+
+	if (leapYear) {
+		int* indexOne = &maxLeapDays[0];
+		int valueOne = *indexOne; 
+		int totalSubtract = *daysPtr - day; 	
+		if (daysPtr == indexOne) {
+			totalDays = *indexOne;
+		}
+		else {
+			while (daysPtr != indexOne) {
+				count++;
+				totalDays += *daysPtr;
+				daysPtr--;
+			}
+		totalDays = totalDays + valueOne;
+		dYear = totalDays - totalSubtract;
+		}
+	}
+	else {
+		int* indexOne = &maxCommonDays[0]; //ptr to the start of the maxCommon day array
+		int valueOne = *indexOne; //value of the first of the days array 
+		int totalSubtract = *daysPtr - day; //we will need to subtract the day from the max to get value to subtract from total
+		if (daysPtr == indexOne) {
+			totalDays = *indexOne;
+		}
+		else {
+			while(daysPtr != indexOne) {
+				count++;
+				totalDays += *daysPtr;
+				daysPtr--;
+			}
+		totalDays = totalDays + valueOne;
+		
+		dYear = totalDays - totalSubtract;
+		}
+		
+	}
+
+}
+
 void Datetime::setTime(int h, int s, int mi) {
 	hour = setHour(h);
 	second = s; 

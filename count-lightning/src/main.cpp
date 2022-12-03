@@ -18,14 +18,16 @@ int main() {
 	obj.printNpoints();
 	obj.setDate(2021, 5, 20);
 	obj.setTime(0, 0, 0);
+	obj.set_dYear(); //day of year to get data from 
 
 	std::vector<std::string> timesArray;
 	int number = obj.getNpoints();
+
 	for (int i = 0; i < number; i++) {
 		obj.secTimeDelta(20);
 		timesArray.push_back(obj.getDateStamp());
 	}
-	for (int i = 0; i < obj.getNpoints(); i++) {
+	for (int i = 0; i < number; i++) {
 		std::cout << timesArray[i] << std::endl; 
 	}
 	

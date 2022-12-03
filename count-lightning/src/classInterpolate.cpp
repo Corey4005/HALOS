@@ -89,9 +89,5 @@ void Interpolate::interpolateLatLons() {
 		newLats.push_back(tempLatOne);
 		newLons.push_back(tempLonOne);
 	}
-
-	for (int i = 0; i < (nPoints - 1); i++) {
-		std::cout << newLats[i] << " " << newLons[i] << std::endl;
-	}
 	
 }

@@ -28,7 +28,7 @@ public:
 	int setHour(int h);
 	void setDate(int y, int mo, int d);
 	void setTime(int h, int s, int mi);
-	void set_dYear(); 
+	void set_dYear();  
 	void secTimeDelta(int sec);
 	std::string getDateStamp();
 
