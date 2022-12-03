@@ -20,6 +20,7 @@ public:
 	int second = 0;
 	int* daysPtr = nullptr;// a ptr to get the maximum number of days for a month depending on if it is a leap year or not. 
 	int dYear = 1; // default day of year for January 1, 1970
+	std::vector<std::string> timesArray;
 	Datetime(); 
 	Datetime(int y, int mo, int d);
 	int setYear(int y);
@@ -30,6 +31,10 @@ public:
 	void setTime(int h, int s, int mi);
 	void set_dYear();  
 	void secTimeDelta(int sec);
+	std::string checkMonth(); 
+	std::string checkDay(); 
+	std::string checkMin(); 
+	std::string checkSec();
 	std::string getDateStamp();
 
 };

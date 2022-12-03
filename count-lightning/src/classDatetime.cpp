@@ -167,13 +167,54 @@ void Datetime::secTimeDelta(int sec) {
 		hour++; 
 	}
 }
+std::string Datetime::checkMonth() {
+	if (month < 10) {
+		std::string mo = "0" + std::to_string(month);
+		return mo; 
+	}
+	else {
+		std::string mo = std::to_string(month);
+		return mo;
+	}
+	
+}
+std::string Datetime::checkDay() {
+	if (day < 10) {
+		std::string d = "0" + std::to_string(day);
+		return d;
+	}
+	else {
+		std::string d = std::to_string(day);
+		return d;
+	}
+}
+std::string Datetime::checkMin() {
+	if (minute < 10) {
+		std::string mi = "0" + std::to_string(minute);
+		return mi; 
+	}
+	else {
+		std::string mi = std::to_string(minute);
+		return mi; 
+	}
+}
+std::string Datetime::checkSec() {
+	if (second < 10) {
+		std::string s = "0" + std::to_string(second);
+		return s; 
+	}
+	else {
+		std::string s = std::to_string(second);
+		return s; 
+	}
+}
 
 std::string Datetime::getDateStamp() {
-	std::string mo = std::to_string(month);
-	std::string d = std::to_string(day);
+	std::string mo = checkMonth();
+	std::string d = checkDay(); 
+	std::string mi = checkMin();
+	std::string s = checkSec(); 
 	std::string y = std::to_string(year);
-	std::string s = std::to_string(second);
-	std::string mi = std::to_string(minute);
 	std::string h = std::to_string(hour);
 	std::string dateStamp = y + ":" + mo + ":" + d + ":" + h + ":" + mi + ":" + s; 
 	return dateStamp; 
