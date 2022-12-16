@@ -131,13 +131,15 @@
     <ClCompile Include="src\classDatetime.cpp" />
     <ClCompile Include="src\classInterpolate.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\units.cpp" />
+    <ClCompile Include="src\convertUnits.cpp" />
+    <ClCompile Include="src\awsS3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\classCommand.h" />
     <ClInclude Include="src\classDatetime.h" />
     <ClInclude Include="src\classInterpolate.h" />
-    <ClInclude Include="src\units.h" />
+    <ClInclude Include="src\convertUnits.h" />
+    <ClInclude Include="src\awsS3.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\count-lightning.filters" />

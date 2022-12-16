@@ -1,5 +1,5 @@
 #include "classInterpolate.h"
-#include "units.h"
+#include "convertUnits.h"
 #include <iostream>
 
 	/* Implemetation file for class Interpolate.
