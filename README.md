@@ -3,7 +3,7 @@ This repo was built on a windows machine using Visual Studio. Therefore, it uses
 
 # Required
 1. vcpkg - package manager
-2. AWS SDK S3 - s3 tool for data
+2. AWS SDK S3, Transfer - s3 tool for data collection and transfer to local
 2. netcdf-cxx4 - netcdf library from UCAR
 
 # How to install vspkg
