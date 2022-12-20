@@ -35,8 +35,9 @@ public:
 	std::string checkDay(); 
 	std::string checkMin(); 
 	std::string checkSec();
+	std::string checkHour();
 	std::string getDateStamp();
-
+	std::string checkdYear(); 
 };
 #endif
 

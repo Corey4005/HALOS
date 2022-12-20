@@ -30,9 +30,3 @@ void Command::printTimeVector() {
 		std::cout << timesArray[i] << std::endl;
 	}
 }
-std::string Command::createDownloadStrings() {
-
-	std::string s3 = bucket + "/" + product + "/" + std::to_string(year) + "/" + std::to_string(dYear) + "/";
-	return s3; 
-}
-

@@ -209,15 +209,38 @@ std::string Datetime::checkSec() {
 	}
 }
 
+std::string Datetime::checkHour() {
+	if (hour < 10) {
+		std::string h = "0" + std::to_string(hour);
+		return h; 
+	}
+
+	else {
+		std::string h = std::to_string(hour);
+		return h; 
+	}
+}
+
 std::string Datetime::getDateStamp() {
 	std::string mo = checkMonth();
 	std::string d = checkDay(); 
+	std::string h = checkHour();
 	std::string mi = checkMin();
 	std::string s = checkSec(); 
 	std::string y = std::to_string(year);
-	std::string h = std::to_string(hour);
 	std::string dateStamp = y + ":" + mo + ":" + d + ":" + h + ":" + mi + ":" + s; 
 	return dateStamp; 
 	
+}
+
+std::string Datetime::checkdYear() {
+	if (dYear < 100) {
+		std::string dy = "0" + std::to_string(dYear);
+		return dy;
+	}
+	else {
+		std::string dy = std::to_string(dYear);
+		return dy;
+	}
 }
 
