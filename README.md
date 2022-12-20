@@ -21,8 +21,12 @@ This repo was built on a windows machine using Visual Studio. Therefore, it uses
   
   ``` 
   $ vcpkg integrate install 
- 
   ``` 
+  # How to install S3, transfer
+  ```
+  vcpkg install aws-cpp-sdk[s3, transfer]:x64-windows
+  
+  ```
   
   # Important configuration and credential settings for the AWS SDK 
   
