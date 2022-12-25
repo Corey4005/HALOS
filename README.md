@@ -40,3 +40,6 @@ This repo was built on a windows machine using Visual Studio. Therefore, it uses
   1. Set up an AWS account and follow steps 1-11 [here](https://docs.aws.amazon.com/sdk-for-cpp/v1/developer-guide/credentials.html) to create a credentials file. 
   2. Similarly, you will need to set up an AWS config file with plain text that is best for your region. Documentation on config files are found [here](https://docs.aws.amazon.com/sdkref/latest/guide/file-format.html).
   3. Set up your `AWS_CONFIG_FILE` and `AWS_CREDENTIALS_FILE` path variables by using the windows commands at the bottom of [this](https://docs.aws.amazon.com/sdkref/latest/guide/file-location.html) page. 
+  
+  # Import configuration setting for HDF5
+  1. You will get an HDF error when trying to read an NcFile unless you set the `HDF5_USE_FILE_LOCKING=FALSE`
