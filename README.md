@@ -4,7 +4,8 @@ This repo was built on a windows machine using Visual Studio. Therefore, it uses
 # Required
 1. vcpkg - package manager
 2. AWS SDK S3, Transfer - s3 tool for data collection and transfer to local
-2. netcdf-cxx4 - netcdf library from UCAR
+3. netcdf-cxx4 - netcdf library from UCAR
+4. HDF5 - hierarchical data format library
 
 # How to install vspkg
   - First pull the [vspkg github repo](https://github.com/microsoft/vcpkg) to a suitable file on your local machine
@@ -14,7 +15,7 @@ This repo was built on a windows machine using Visual Studio. Therefore, it uses
   The following will install the x64 version of the library: 
   
   ``` 
-  $ vcpkg install netcdf-cxx4 --triplet x64-windows 
+  $ vcpkg install netcdf-cxx4:x64-windows 
   
   ```
   The following will make your library available to the ```#include``` preprocessor statement in Visual Studio:
@@ -25,6 +26,11 @@ This repo was built on a windows machine using Visual Studio. Therefore, it uses
   # How to install S3, transfer
   ```
   vcpkg install aws-cpp-sdk[s3, transfer]:x64-windows
+  
+  ```
+  # How to install HDF5
+  ```
+  vcpkg install hdf5:x64-windows
   
   ```
   
