@@ -18,7 +18,7 @@ This repo was built on a windows machine using Visual Studio. Therefore, it uses
   $ vcpkg install netcdf-cxx4:x64-windows 
   
   ```
-  The following will make your library available to the ```#include``` preprocessor statement in Visual Studio:
+  The following command will make all libraries downloaded available to the ```#include``` preprocessor statement in Visual Studio:
   
   ``` 
   $ vcpkg integrate install 
