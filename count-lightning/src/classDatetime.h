@@ -5,7 +5,7 @@
 /* declaration file for class Distance class
 *
 */
-class Datetime {
+class Datetime : public Interpolate {
 private:
 	int maxLeapDays[12] = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }; 
 	int maxCommonDays[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -31,6 +31,8 @@ public:
 	void setTime(int h, int s, int mi);
 	void set_dYear();  
 	void secTimeDelta(int sec);
+	void fillTimeVector(); //fills timesArray with timestamps
+	void printTimeVector(); //function to print all values from time vector
 	std::string checkMonth(); 
 	std::string checkDay(); 
 	std::string checkMin(); 

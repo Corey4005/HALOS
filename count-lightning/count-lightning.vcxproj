@@ -131,6 +131,7 @@
     <ClCompile Include="src\classCommand.cpp" />
     <ClCompile Include="src\classDatetime.cpp" />
     <ClCompile Include="src\classInterpolate.cpp" />
+    <ClCompile Include="src\classNetCDF.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\convertUnits.cpp" />
     <ClCompile Include="src\awsS3.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="src\classCommand.h" />
     <ClInclude Include="src\classDatetime.h" />
     <ClInclude Include="src\classInterpolate.h" />
+    <ClInclude Include="src\classNetCDF.h" />
     <ClInclude Include="src\convertUnits.h" />
     <ClInclude Include="src\awsS3.h" />
   </ItemGroup>

@@ -244,3 +244,19 @@ std::string Datetime::checkdYear() {
 	}
 }
 
+
+void Datetime::fillTimeVector() {
+	int number = getNpoints();
+
+	for (int i = 0; i < number; i++) {
+		secTimeDelta(20);
+		timesArray.push_back(getDateStamp());
+	}
+}
+
+void Datetime::printTimeVector() {
+	int number = getNpoints();
+	for (int i = 0; i < number; i++) {
+		std::cout << timesArray[i] << std::endl;
+	}
+}
