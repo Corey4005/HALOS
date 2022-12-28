@@ -5,16 +5,16 @@
 #include <filesystem>
 #include "awsS3.h"
 
+
 Command::Command() {
 	//default constructor
 }
 
-void Command::getUniqueHours() { //start here next week
-	/*int number = getNpoints();
-	for (int i = 0; i < number; i++) {
+void listDirContents(const std::string& path) {
 
-		timesArray[i].substr(11, 1); 
-	}*/
+	for (const auto& entry : std::filesystem::directory_iterator(path)) {
+		contents.push_back(entry.path().filename().string());
+	}
 }
 
 void Command::fillTimeVector() {
@@ -55,4 +55,8 @@ void Command::deleteNetCDFs() {
 			std::cout << entry.path() << " removed!" << std::endl;
 		}
 	}
+}
+
+std::string Command::getcwd() {
+	return cwd;
 }

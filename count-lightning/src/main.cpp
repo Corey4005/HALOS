@@ -14,6 +14,8 @@ int main() {
 	Aws::SDKOptions options;
 	Aws::InitAPI(options);
 
+	
+
 	// Create a Command object to download files from a bucket
 	Command obj;
 
@@ -38,11 +40,16 @@ int main() {
 	// Fill the time vector with a datestamp for each nPoint and 
 	// download the corresponding NetCDF files from s3
 	obj.fillTimeVector();
-	obj.downloadNetCDFs(clientConfig);
-
+	/*obj.downloadNetCDFs();*/ //<- uncomment to download netcdf files
 	// Delete the downloaded NetCDF files
 	//obj.deleteNetCDFs(); //<-function deletes all netcdf data in the folder
+	
+	//create a list containing all of the netcdfs in the current working directory
+	std::vector<std::string> paths = obj.listDirContents(obj.getcwd()); 
 
+	for (const auto& name : paths) {
+		std::cout << name << std::endl;
+	}
 	// Shut down the AWS SDK
 	Aws::ShutdownAPI(options);
 
