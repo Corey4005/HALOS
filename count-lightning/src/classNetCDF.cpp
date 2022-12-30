@@ -3,6 +3,9 @@
 #include "classDatetime.h"
 #include "awsS3.h"
 #include <netcdf>
+///----------------------------------------------------------------
+/// function definitions for netcdf class
+///---------------------------------------------------------------
 
 netcdf::netcdf() { //default constructor
 
@@ -52,3 +55,9 @@ std::vector<std::string> netcdf::getPaths() {
 	return paths;
 }
 
+///----------------------------------------------------------------
+/// function definitions for infoNodes helper class
+///---------------------------------------------------------------
+infoNode::infoNode() {
+
+}
