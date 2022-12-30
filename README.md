@@ -1,11 +1,11 @@
 
-This repo was built on a windows machine using Visual Studio. Therefore, it uses a windows package managers to install the required libraries. 
+This repo was built on a windows machine using Visual Studio using the [MSVC legacy compiler](https://learn.microsoft.com/en-us/cpp/build/reference/compiling-a-c-cpp-program?view=msvc-170). 
 
 # Required
-1. vcpkg - package manager
-2. AWS SDK S3, Transfer - s3 tool for data collection and transfer to local
-3. netcdf-cxx4 - netcdf library from UCAR
-4. HDF5 - hierarchical data format library
+1. [vcpkg](https://vcpkg.io/en/index.html) - C++ package manager for windows machines
+2. [AWS C++ SDK](https://github.com/aws/aws-sdk-cpp/tree/main/aws-cpp-sdk-s3) [S3] - tool for data collection from cloud to local ```/netcdf``` directory
+3. netcdf-cxx4 - netcdf library from UCAR to process netcdf files
+4. HDF5 - hierarchical data format library, required for netcdf-cxx4 as dependency
 
 # How to install vspkg
   - First pull the [vspkg github repo](https://github.com/microsoft/vcpkg) to a suitable file on your local machine
@@ -18,7 +18,7 @@ This repo was built on a windows machine using Visual Studio. Therefore, it uses
   $ vcpkg install netcdf-cxx4:x64-windows 
   
   ```
-  The following will make your library available to the ```#include``` preprocessor statement in Visual Studio:
+  The following command will make all libraries downloaded available to the ```#include``` preprocessor statement in Visual Studio:
   
   ``` 
   $ vcpkg integrate install 
