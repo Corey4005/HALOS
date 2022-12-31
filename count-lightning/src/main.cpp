@@ -14,8 +14,6 @@ int main() {
 	Aws::SDKOptions options;
 	Aws::InitAPI(options);
 
-	
-
 	// Create a Command object to download files from a bucket
 	Command obj;
 
@@ -83,8 +81,34 @@ int main() {
 		std::cout << "Attribute: " << itr->first << std::endl;
 	}
 
-
+	//get the variables and store them NcVar objects
+	netCDF::NcVar flashLat, flashLon, flashEnergy, flashQuality;
+	flashLat = dataFile.getVar("flash_lat");
+	flashLon = dataFile.getVar("flash_lon");
+	flashEnergy = dataFile.getVar("flash_energy");
+	flashQuality = dataFile.getVar("flash_quality_flag");
 	
+	// create a vector conatining the dimensions of the flash objects
+	std::vector<netCDF::NcDim> flashLatDims = flashLat.getDims(); 
+	std::vector<netCDF::NcDim> flashLonDims = flashLon.getDims(); 
+	std::vector<netCDF::NcDim> flashEnergyDims = flashEnergy.getDims(); 
+	std::vector<netCDF::NcDim> flashQualityDims = flashQuality.getDims(); 
+
+	// create arrays to store the data inside that are dynamic, based on the size of the Dim
+	double* flashLatData = new double[flashLatDims[0].getSize()];
+	double* flashLonData = new double[flashLonDims[0].getSize()];
+	int* flashEnergyData = new int[flashEnergyDims[0].getSize()];
+	int* flashQualityData = new int[flashQualityDims[0].getSize()];
+
+	//call the getVar() function on NcVar object and store it in the data arrays
+	flashLat.getVar(flashLatData);
+	flashLon.getVar(flashLonData);
+	flashEnergy.getVar(flashEnergyData);
+	flashQuality.getVar(flashQualityData);
+
+	for (int i = 0; i < flashLatDims[0].getSize(); i++) { //use pointer arithmatic to get the dereferenced value of each array
+		std::cout << *(flashLatData+i) << " " << *(flashLonData+i) << " " << *(flashEnergyData+i)<< " " << *(flashQualityData+i) << std::endl;
+	}
 	//obj.deleteNetCDFs(); //<-function deletes all netcdf data in the folder
 	// Shut down the AWS SDK
 	Aws::ShutdownAPI(options);
