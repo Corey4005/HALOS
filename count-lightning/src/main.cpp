@@ -9,6 +9,7 @@
 #include <filesystem>
 #include <iostream>
 #include "awsS3.h"
+
 int main() {
 	// Initialize the AWS SDK
 	Aws::SDKOptions options;
@@ -36,82 +37,37 @@ int main() {
 	obj.set_dYear();
 
 	// Fill the time vector with a datestamp for each nPoint and 
-	// download the corresponding NetCDF files from s3
 	obj.fillTimeVector();
 
-	/*obj.downloadNetCDFs(clientConfig);*/ //<- uncomment to download netcdf files
-	// Delete the downloaded NetCDF files
+	//download the corresponding timeVector files from AWS 
+	/*obj.downloadNetCDFs(clientConfig); *///<- comment to stop the download of files (if they are in directory already)
 	
-	//create a list in paths object containing all of the netcdfs in the current netcdf directory
+	//create a list object containing all of the netcdfs in the current netcdf directory
 	obj.getNetCDFDirContents();
 
-	//print the netCDF paths
-	/*obj.printNetCDFpaths(); */
-	
-	//create a test object to open netcdf file 
-	std::vector<std::string> path = obj.getPaths(); 
-	std::string test = path[0];
-	std::cout << test << std::endl;
+	//go through each file in the list object and create a info node for each 
+	obj.getStormPathInfo(); 
 
-	netCDF::NcFile dataFile(test, netCDF::NcFile::read);
-
-	//here we will get inquiries of the data
-	auto vars = dataFile.getVars(); //variable names
-	auto atts = dataFile.getAtts(); //attribute names
-	auto attCount = dataFile.getAttCount(); //number of attributes - store metadata of data and files. if temp is a variable, its attribute might be "units"-degreesC
-	auto dimCount = dataFile.getDimCount(); //number of dims - Dimensions are used to define the shape of data in netCDF. 
-	auto groupCount = dataFile.getGroupCount(); //number of groups - groups are integers that describe how variables are grouped together. Provides an id to group
-	auto typeCount = dataFile.getTypeCount(); //number of types 
-
-
-	//print the information about the file
-	std::cout << "there are " << attCount << " attributes in the file" << std::endl; 
-	std::cout << "there are " << dimCount << " dimenstions in the file" << std::endl;
-	std::cout << "there are " << groupCount << " groups in the file" << std::endl; //there are 0 groups in this file
-	std::cout << "there are " << typeCount << " types in the file" << std::endl;  //there are 0 types in this file
-	std::cout << std::endl; 
-
-	//here we can print the variables 
-	for (std::multimap<std::string, netCDF::NcVar>::iterator itr = vars.begin(); itr != vars.end(); itr++) {
-		std::cout << "Variable: " << itr->first << std::endl;
-	}
-	
-	//here we can print the attributes
-	for (std::multimap<std::string, netCDF::NcGroupAtt>::iterator itr = atts.begin(); itr != atts.end(); itr++) {
-		std::cout << "Attribute: " << itr->first << std::endl;
-	}
-
-	//get the variables and store them NcVar objects
-	netCDF::NcVar flashLat, flashLon, flashEnergy, flashQuality;
-	flashLat = dataFile.getVar("flash_lat");
-	flashLon = dataFile.getVar("flash_lon");
-	flashEnergy = dataFile.getVar("flash_energy");
-	flashQuality = dataFile.getVar("flash_quality_flag");
-	
-	// create a vector conatining the dimensions of the flash objects
-	std::vector<netCDF::NcDim> flashLatDims = flashLat.getDims(); 
-	std::vector<netCDF::NcDim> flashLonDims = flashLon.getDims(); 
-	std::vector<netCDF::NcDim> flashEnergyDims = flashEnergy.getDims(); 
-	std::vector<netCDF::NcDim> flashQualityDims = flashQuality.getDims(); 
-
-	// create arrays to store the data inside that are dynamic, based on the size of the Dim
-	double* flashLatData = new double[flashLatDims[0].getSize()];
-	double* flashLonData = new double[flashLonDims[0].getSize()];
-	int* flashEnergyData = new int[flashEnergyDims[0].getSize()];
-	int* flashQualityData = new int[flashQualityDims[0].getSize()];
-
-	//call the getVar() function on NcVar object and store it in the data arrays
-	flashLat.getVar(flashLatData);
-	flashLon.getVar(flashLonData);
-	flashEnergy.getVar(flashEnergyData);
-	flashQuality.getVar(flashQualityData);
-
-	for (int i = 0; i < flashLatDims[0].getSize(); i++) { //use pointer arithmatic to get the dereferenced value of each array
-		std::cout << *(flashLatData+i) << " " << *(flashLonData+i) << " " << *(flashEnergyData+i)<< " " << *(flashQualityData+i) << std::endl;
-	}
-	//obj.deleteNetCDFs(); //<-function deletes all netcdf data in the folder
+	//print all the info from the netcdf data
+	obj.printAllInfoNodes(); 
+	/*obj.deleteNetCDFs();*/ //<-comment this function to stop the deletion of all netcdf data in the folder.
 	// Shut down the AWS SDK
 	Aws::ShutdownAPI(options);
 
+	//get the info node and push the data to a textfile
+	std::vector<infoNode> flashInfo = obj.getInfoVector();
+	std::ofstream myfile;
+
+	//creating the textfile in the textfile dir
+	myfile.open(obj.getTextPath()+"flashdata.txt");
+
+	//file will be comma delimiated for easy excel use
+	myfile << "DateStamp (yyyydddhhmmssmm),Latitude (degrees),Flash Longitude (degrees),Flash Strength (Total Mj)" << "\n";
+	for (int i = 0; i < obj.getInfoVector().size(); i++) {
+		for (int j = 0; j < flashInfo[i].getFlashLats().size(); j++) {
+			myfile << flashInfo[i].getFlashDate() << "," << flashInfo[i].getFlashLats()[j] << "," << flashInfo[i].getFlashLons()[j] << "," << flashInfo[i].getFlashStrength()[j] << "\n";
+		}
+	}
+	myfile.close();
 	return 0;
 }

@@ -1,10 +1,12 @@
 #ifndef INTERPOLATE_H
 #define INTERPOLATE_H
 #include <vector>
+
 /* declaration file for class Distance class
 * 
 */
 class Interpolate {
+	friend class netcdf;
 	const double earthRadius = 6371e3; //earth's mean earth radius
 	double distance = 0.0; //the distance in kilometers between two latitudes and longitudes
 	double speed = 0.0;
@@ -31,6 +33,8 @@ public:
 	int getNpoints(); 
 	void printNpoints();
 	void interpolateLatLons();
+	std::vector<double> getInterpolatedLats();
+	std::vector<double> getInterpolatedLons();
 };
 
 #endif

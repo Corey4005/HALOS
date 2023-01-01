@@ -91,3 +91,7 @@ void Interpolate::interpolateLatLons() {
 	}
 	
 }
+
+std::vector<double> Interpolate::getInterpolatedLats(){ return newLats; }
+
+std::vector<double> Interpolate::getInterpolatedLons() { return newLons; }
