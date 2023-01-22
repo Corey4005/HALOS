@@ -28,7 +28,7 @@ public:
 	int setDay(int d, int mo);
 	int setHour(int h);
 	void setDate(int y, int mo, int d);
-	void setTime(int h, int s, int mi);
+	void setTime(int h, int mi, int s);
 	void set_dYear();  
 	void secTimeDelta(int sec);
 	void fillTimeVector(); //fills timesArray with timestamps
@@ -40,6 +40,7 @@ public:
 	std::string checkHour();
 	std::string getDateStamp();
 	std::string checkdYear(); 
+	std::vector<std::string> getTimeVector(); 
 };
 #endif
 

@@ -69,7 +69,7 @@ void Datetime::set_dYear() {
 
 }
 
-void Datetime::setTime(int h, int s, int mi) {
+void Datetime::setTime(int h, int mi, int s) {
 	hour = setHour(h);
 	second = s; 
 	minute = mi; 
@@ -152,9 +152,10 @@ void Datetime::secTimeDelta(int sec) {
 	} if (minute == 60) {
 		minute = 0;
 		hour++;
-	} if (hour == 23) {
+	} if (hour == 24) {
 		hour = 0;
 		day++;
+		dYear++;
 	} 
 	second += sec; 
 	if (second >= 60) {
@@ -249,14 +250,18 @@ void Datetime::fillTimeVector() {
 	int number = getNpoints();
 
 	for (int i = 0; i < number; i++) {
-		secTimeDelta(20);
 		timesArray.push_back(getDateStamp());
+		secTimeDelta(20);
 	}
 }
 
 void Datetime::printTimeVector() {
-	int number = getNpoints();
+	int number = getNpoints() - 1;
 	for (int i = 0; i < number; i++) {
 		std::cout << timesArray[i] << std::endl;
 	}
+}
+
+std::vector<std::string> Datetime::getTimeVector() {
+	return timesArray; 
 }

@@ -83,7 +83,7 @@ void Interpolate::interpolateLatLons() {
 	double lonDis = abs((lonTwo - lonOne) / nPoints); 
 	double tempLatOne = latOne; 
 	double tempLonOne = lonOne;
-	for (int i = 0; i < (nPoints-1); i++) {
+	for (int i = 0; i < nPoints; i++) {
 		tempLatOne += latDis;
 		tempLonOne += lonDis;
 		newLats.push_back(tempLatOne);

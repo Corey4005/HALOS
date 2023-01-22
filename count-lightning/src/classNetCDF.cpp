@@ -3,6 +3,8 @@
 #include "classDatetime.h"
 #include "awsS3.h"
 #include <netcdf>
+#include <string>
+#include <fstream>
 ///----------------------------------------------------------------
 /// function definitions for netcdf class
 ///---------------------------------------------------------------
@@ -16,6 +18,7 @@ std::string netcdf::getNetCDFDir() {
 
 void netcdf::downloadNetCDFs(Aws::Client::ClientConfiguration& clientConfig) {
 	int number = getNpoints();
+	int objectCount = 1;
 	for (int i = 0; i < number; i++) {
 		std::string year = timesArray[i].substr(0, 4);
 		std::string dy = checkdYear();
@@ -26,7 +29,8 @@ void netcdf::downloadNetCDFs(Aws::Client::ClientConfiguration& clientConfig) {
 		const char* tsec = "0";
 		std::string date = year + dy + hour + minute + second + tsec;
 		std::string prefix = "GLM-L2-LCFA/" + year + "/" + dy + "/" + hour;
-		findObject(bucket, prefix, date, clientConfig, true);
+		findObject(bucket, prefix, date, clientConfig, true, objectCount, number);
+		objectCount++; 
 	}
 }
 void netcdf::deleteNetCDFs() {
@@ -53,14 +57,18 @@ void netcdf::printNetCDFpaths() {
 
 std::vector<std::string> netcdf::getPaths() { return paths;}
 
-void netcdf::getStormPathInfo() {
+void netcdf::getStormPathInfo(std::ofstream &myfile) {
+	//get the interpolated lats and lons list
 	std::vector<double> stormLats = getInterpolatedLats();
 	std::vector<double> stormLons = getInterpolatedLons(); 
-	std::vector<std::string> paths = getPaths(); 
-	int points = getNpoints(); 
-	for (int i = 0; i < points; i++) {
-		std::cout << "processing file: " << paths[i].substr(73, 14) << std::endl;
+	
+	//test is the paths of the files that we will loop through to process
+	int test = getPaths().size(); 
 
+	//loop through each file and process it 
+	for (int i = 0; i < test; i++) {
+		std::cout << "processing file: " << paths[i].substr(73, 14) << std::endl;
+		
 		//open the path netcdf
 		netCDF::NcFile dataFile(paths[i], netCDF::NcFile::read);
 
@@ -98,45 +106,64 @@ void netcdf::getStormPathInfo() {
 		//create infonode and get information about variables 
 		int dimSize = flashLatDims[0].getSize(); 
 
-		infoNode* newNode = new infoNode; //create a new node and push the date to it
-		newNode->pushFlashDate(paths[i]);
+		//create a node to collect the flash information in
+		infoNode* newNode = new infoNode; 
 
+		//push the date to the node
+		newNode->pushFlashDate(paths[i]);
+		
+		//loop through all of the file flash data and check if it is within the bounding box
 		for (int j = 0; j<dimSize; j++) {
-			 
-			if ((minLat <=flashLatData[j]) && (flashLatData[j] <= maxLat) && (minLon <= flashLonData[j]) && (flashLonData[j] <= maxLon)) {
-				newNode->pushFlashLat(flashLatData[j]);
-				newNode->pushFlashLon(flashLonData[j]);
-				newNode->pushFlashQuality(flashQualityData[j]);
-				newNode->pushFlashStrength(flashEnergyData[j]); //will push energy and also count 
+			double lat = *(flashLatData + j);
+			double lon = *(flashLonData + j);
+
+			//if the flash data is within the bounding box, push it to the node
+			if (minLat <=  lat && lat <= maxLat && minLon <= lon && lon <= maxLon) {
+
+				newNode->pushFlashLat(lat);
+				newNode->pushFlashLon(lon);
+				newNode->pushFlashQuality(*(flashQualityData+j));
+				newNode->pushFlashStrength(*(flashEnergyData+j)); //will push energy and also count 
 			}
+			//else dont do anything
 			else {
 
 			}
 			
 		}
+		
+		//check if the flash node is 0, if it is print that there were no flashes found and delete node
 		if (newNode->getFlashCount() == 0) {
-			pathInfo.push_back(*newNode);
-			std::cout << "No flashes found!";
+			std::cout << "No flashes found!" << std::endl;
+			delete newNode; 
 		}
+		//else push that info to the textfile and write it out
 		else {
-			pathInfo.push_back(*newNode);
 			std::cout << "flashes found! " << std::endl;
+			//file will be comma delimiated for easy excel use
+			for(int j=0; j<newNode->getFlashLats().size(); j++){
+				myfile << newNode->getFlashDate() << "," << newNode->getFlashLats()[j] << "," << newNode->getFlashLons()[j] << "," << newNode->getFlashStrength()[j] << std::endl;
+			}
+			
+			delete newNode;
+	
 		}
 		
+		delete[] flashLatData;
+		delete[] flashLonData;
+		delete[] flashEnergyData; 
+		delete[] flashQualityData; 
 
-		//delete allocated arrays
-		delete flashLatData;
-		delete flashLonData;
-		delete flashEnergyData; 
-		delete flashQualityData;
 
 	}
+	
 }
 
 void netcdf::printAllInfoNodes() {
 	for (int i = 0; i < pathInfo.size(); i++) {
 		std::cout << "There were " << pathInfo[i].getFlashCount() << " flash events in file " << pathInfo[i].getFlashDate() << std::endl;
 	}
+
 }
 
 std::vector<infoNode> netcdf::getInfoVector() { return pathInfo; }

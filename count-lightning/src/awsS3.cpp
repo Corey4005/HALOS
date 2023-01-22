@@ -12,6 +12,7 @@
  * It includes functions for finding and downloading objects from a bucket.
  */
 
+int downLoadCount = 1; //a variable to count the number of downloads 
 bool GetObject(const Aws::String& objectKey,
     const Aws::String& fromBucket, const Aws::String& date,
     const Aws::Client::ClientConfiguration& clientConfig) {
@@ -48,7 +49,7 @@ bool findObject(const Aws::String& bucketName,
     const Aws::String& subfolder,
     const Aws::String& date,
     const Aws::Client::ClientConfiguration& client, 
-    bool downloadObject) {
+    bool downloadObject, int&batchNumberCount, int& nPointsCount) {
     // Create an S3 client using the provided client configuration
     Aws::S3::S3Client s3_client(client);
 
@@ -72,7 +73,8 @@ bool findObject(const Aws::String& bucketName,
             if (fileSubstringAtS3 == date) {
                 // If the file substring matches the specified date, download it by calling getObject
                 Aws::String objectKey = object.GetKey();
-                std::cout << "Downloading " << date << " from s3!" << std::endl;
+                std::cout << "Downloading " << date << " from s3!" << " Total Downloads Count: " << downLoadCount << " This Batch Count: " << batchNumberCount << "/" << nPointsCount << std::endl;
+                downLoadCount++; 
                 GetObject(objectKey, bucketName, date, client);
 
             }

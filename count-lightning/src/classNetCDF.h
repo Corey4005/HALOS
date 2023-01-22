@@ -26,7 +26,7 @@ public:
 	void getNetCDFDirContents(); //function to create a vector of netcdf filepaths that reside in the netcdfPath
 	void printNetCDFpaths(); //funciton to print all of the files in the paths vector
 	std::vector<std::string> getPaths(); //function to return the vector containing all of the netcdf files
-	void getStormPathInfo(); //function to process the files in the netcdf directory and push all infonodes to netcdf class. 
+	void getStormPathInfo(std::ofstream &myfile); //function to process the files in the netcdf directory and push all infonodes to netcdf class. 
 	void printAllInfoNodes(); //function to print values from infoNodes
 	std::vector<infoNode> getInfoVector(); //function to return the infoNode vector
 	std::string getTextPath(); //funciton to return directory of textfile

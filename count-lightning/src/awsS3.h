@@ -21,7 +21,7 @@ bool findObject(const Aws::String& bucketName,
     const Aws::String& subfolder, 
     const Aws::String& date, 
     const Aws::Client::ClientConfiguration& client, 
-    bool downloadObject);
+    bool downloadObject, int& batchNumberCount, int& nPointsCount);
 
 // Declare function to download an object from a bucket
 bool GetObject(const Aws::String& objectKey,
