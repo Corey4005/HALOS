@@ -30,7 +30,7 @@ public:
 	void calculate20SecondDistance();
 	void print20SecondDistance();
 	void calculateNpoints();
-	int getNpoints(); 
+	double getNpoints(); 
 	void printNpoints();
 	void interpolateLatLons();
 	std::vector<double> getInterpolatedLats();

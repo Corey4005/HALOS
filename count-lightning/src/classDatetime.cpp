@@ -149,13 +149,26 @@ void Datetime::secTimeDelta(int sec) {
 	if (second == 60) {
 		minute++;
 		second = 0;
-	} if (minute == 60) {
+	} 
+	if (minute == 60) {
 		minute = 0;
 		hour++;
-	} if (hour == 24) {
+	} 
+	if (hour == 24) {
 		hour = 0;
 		day++;
-		dYear++;
+		if (dYear == 365 && leapYear != true) {
+			dYear == 0;
+		}
+		else if (dYear == 365 && leapYear) {
+			dYear++;
+		}
+		else if (dYear == 366) {
+			dYear = 0;
+		}
+		else {
+			dYear++;
+		}
 	} 
 	second += sec; 
 	if (second >= 60) {
@@ -235,7 +248,11 @@ std::string Datetime::getDateStamp() {
 }
 
 std::string Datetime::checkdYear() {
-	if (dYear < 100) {
+	if (dYear < 10) {
+		std::string dy = "00" + std::to_string(dYear);
+		return dy;
+	}
+	else if (dYear >= 10 && dYear <= 99) {
 		std::string dy = "0" + std::to_string(dYear);
 		return dy;
 	}

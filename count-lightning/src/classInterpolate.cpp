@@ -74,7 +74,7 @@ void Interpolate::printNpoints() {
 		nPoints << std::endl;
 }
 
-int Interpolate::getNpoints() {
+double Interpolate::getNpoints() {
 	return nPoints; 
 }
 

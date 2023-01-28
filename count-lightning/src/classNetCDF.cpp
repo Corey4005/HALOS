@@ -142,7 +142,7 @@ void netcdf::getStormPathInfo(std::ofstream &myfile) {
 			std::cout << "flashes found! " << std::endl;
 			//file will be comma delimiated for easy excel use
 			for(int j=0; j<newNode->getFlashLats().size(); j++){
-				myfile << newNode->getFlashDate() << "," << newNode->getFlashLats()[j] << "," << newNode->getFlashLons()[j] << "," << newNode->getFlashStrength()[j] << std::endl;
+				myfile << newNode->getFlashDate() << "," << newNode->getFlashLats()[j] << "," << newNode->getFlashLons()[j] << "," << newNode->getFlashStrength()[j] << "," << newNode->getFlashQuality()[j] << std::endl;
 			}
 			
 			delete newNode;
@@ -186,7 +186,7 @@ void infoNode::pushFlashLon(const double& longitude) {
 }
 
 void infoNode::pushFlashDate(const std::string &path) { //pass a full filepath object that is the full name of the file
-	std::string substring = path.substr(73, 14); //parses the string on my system to return just the relevant timestamp
+	std::string substring = path.substr(path.length()-17, 14); //parses the string on my system to return just the relevant timestamp
 	flashDate = substring; 
 }
 

@@ -9,8 +9,12 @@
 #include <filesystem>
 #include <iostream>
 #include "awsS3.h"
+#include <chrono>
 
 int main() {
+	//time program 
+	auto start = std::chrono::steady_clock::now();
+
 	//Initialize the AWS SDK
 	Aws::SDKOptions options;
 	Aws::InitAPI(options);
@@ -42,7 +46,7 @@ int main() {
 			myfile.open(textFilePath+filename);
 
 			//we will spit out the textfile and then close it with the new header. 
-			myfile << "DateStamp (yyyydddhhmmssmm),Latitude (degrees),Flash Longitude (degrees),Flash Strength (Total Mj)" << std::endl;
+			myfile << "DateStamp (4 digit year, 3 digit day of year, 2 digit hour, 2 digit minute, 2 digit second, 1 digit tenth of second),Latitude (degrees),Flash Longitude (degrees),Flash Strength (Total Mj), Flash Quality(0-3)" << std::endl;
 
 			//create a stringstream to open the file
 			std::ifstream input_file(path);
@@ -158,7 +162,14 @@ int main() {
 		}
 			
 	}
+	//  Insert the code that will be timed
+	auto end = std::chrono::steady_clock::now();
 	
+	// Store the time difference between start and end
+	auto diff = end - start;
+
+	//calculate process time
+	std::cout <<"process time: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << "ms" << std::endl;
 
 	// Shut down the AWS SDK
 	Aws::ShutdownAPI(options);
