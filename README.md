@@ -1,5 +1,7 @@
+# Overview
+HALIOS - "Hurricane Advanced Lightning Observation System" is a C++ program to collect lightning data from interpolated timestamp points over known hurricane pathways. Currently, [Python based programs](https://github.com/Corey4005/Count-Hurricane-Lightining-Flashes) that provide similar solutions take increased time (~8 hours per storm path) to collect all lightning information along a pathway. This program can collect the same amount of infomation in half the time because it is written in C++, which serperates run time from compile time and does not need an interpretor. This means that this tool could possibly help researchers interested in generating lighting climatologies over hurrricane events at increased scale and speed. 
 
-This repo was built on a windows machine using Visual Studio using the [MSVC legacy compiler](https://learn.microsoft.com/en-us/cpp/build/reference/compiling-a-c-cpp-program?view=msvc-170). 
+Currently this repo can be built on a windows machine using Visual Studio and the [MSVC legacy compiler](https://learn.microsoft.com/en-us/cpp/build/reference/compiling-a-c-cpp-program?view=msvc-170). 
 
 # Required
 1. [vcpkg](https://vcpkg.io/en/index.html) - C++ package manager for windows machines
