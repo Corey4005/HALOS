@@ -44,4 +44,4 @@ Currently this repo can be built on a windows machine using Visual Studio and th
   3. Set up your `AWS_CONFIG_FILE` and `AWS_CREDENTIALS_FILE` path variables by using the windows commands at the bottom of [this](https://docs.aws.amazon.com/sdkref/latest/guide/file-location.html) page. 
   
   # Import configuration setting for HDF5
-  1. You will get an HDF error when trying to read an NcFile unless you set the `HDF5_USE_FILE_LOCKING=FALSE`
+  1. You will get an HDF error when trying to read an NcFile unless you set the `HDF5_USE_FILE_LOCKING=FALSE` as an environment variable on your computer.
